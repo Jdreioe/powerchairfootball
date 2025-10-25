@@ -426,12 +426,22 @@
             }
         }
 
-        // Check if setup is already complete
-        if (localStorage.getItem('pcfb_setup_complete') === 'true') {
-            if (confirm('Opsætningen er allerede gennemført. Vil du køre den igen? Dette vil overskrive eksisterende indstillinger.')) {
-                localStorage.removeItem('pcfb_setup_complete');
+        // Check if setup is already complete - but don't force redirect on GitHub Pages
+        const setupComplete = localStorage.getItem('pcfb_setup_complete');
+        if (setupComplete === 'true') {
+            const runAgain = confirm('Opsætningen er allerede gennemført. Vil du køre den igen? Dette vil overskrive eksisterende indstillinger.');
+            if (!runAgain) {
+                // Don't redirect, just show message
+                document.querySelector('.setup-container').innerHTML = `
+                    <h1>Opsætning allerede fuldført</h1>
+                    <p>Din side er allerede konfigureret.</p>
+                    <div class="button-group">
+                        <a href="./index.html" class="btn btn-outline">Gå til forsiden</a>
+                        <a href="./admin.html" class="btn">Åbn admin</a>
+                    </div>
+                `;
             } else {
-                window.location.href = './index.html';
+                localStorage.removeItem('pcfb_setup_complete');
             }
         }
     </script>

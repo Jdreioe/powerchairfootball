@@ -1,88 +1,158 @@
 # Powerchair Football Danmark Website
 
-## Admin Security
+## GitHub Pages Deployment
 
-**Default password:** `admin123`
+This website is designed to work on GitHub Pages without any server-side code.
 
-⚠️ **CRITICAL:** Change the default password immediately!
+### Setup Instructions
 
-### Security Features
+1. **Fork or clone this repository**
+2. **Enable GitHub Pages:**
+   - Go to repository Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: `main` (or `master`) → `/root`
+   - Save
 
-- **SHA-512 Password Hashing**: Passwords are hashed using SHA-512
-- **Session Tokens**: Random 64-character session tokens
-- **Login Attempt Limiting**: Max 5 attempts, 15-minute lockout
-- **Session Timeout**: 1-hour automatic logout
-- **XSS Protection**: HTML sanitization on all user inputs
-- **DevTools Detection**: Automatic logout when developer tools detected
-- **Input Validation**: Pattern matching and required fields
+3. **First-time setup:**
+   - Visit `https://yourusername.github.io/your-repo/setup.html`
+   - Follow the setup wizard to create admin password
+   - Load sample data or start fresh
 
-### How to change the admin password:
+4. **Access admin area:**
+   - Visit `https://yourusername.github.io/your-repo/admin.html`
+   - Login with your password
 
-1. Open your browser console (F12) on localhost
-2. Run this command with your new password:
+### How It Works
 
-```javascript
-async function generatePasswordHash(password) {
-    const msgBuffer = new TextEncoder().encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-512', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
+- **No Server Required:** All data stored in browser localStorage
+- **Client-Side Only:** Pure HTML/CSS/JavaScript
+- **Secure:** Password hashing with SHA-512
+- **Automatic Updates:** Data refreshes every 5 minutes
 
-// Generate hash for your new password
-await generatePasswordHash('YOUR_NEW_PASSWORD_HERE');
-```
+### Data Storage
 
-3. Copy the generated hash
-4. Open `admin.html` and find the line:
-   ```javascript
-   const expectedHash = 'c7ad44...';
-   ```
-5. Replace with your new hash
-6. Save the file
-
-### Advanced: RSA Encryption Setup
-
-For production environments, implement proper RSA encryption:
-
-1. Generate RSA key pair (2048-bit minimum):
-```bash
-# Generate private key
-openssl genrsa -out private_key.pem 2048
-
-# Generate public key
-openssl rsa -in private_key.pem -pubout -out public_key.pem
-```
-
-2. Store private key **offline and secure**
-3. Use public key in application for password verification
-4. Implement backend verification with private key
-
-## Data Storage
-
-All data is stored in browser localStorage:
+All data is stored locally in your browser:
 - `pcfb_results` - Match results
 - `pcfb_teams` - Team information
 - `pcfb_admin_session` - Admin session with token
+- `pcfb_admin_hash` - Encrypted admin password
 - `pcfb_login_attempts` - Login attempt tracking
+- `pcfb_setup_complete` - Setup completion flag
 
-## Security Best Practices
+**Important:** Data is browser-specific. If you clear browser data or use a different browser/device, you'll need to re-enter data.
 
-1. ✅ Always use HTTPS in production
-2. ✅ Change default password immediately
-3. ✅ Regular data backups via JSON export
-4. ✅ Monitor login attempts
-5. ✅ Keep session duration reasonable
-6. ⚠️ Consider server-side authentication for production
-7. ⚠️ Implement Content Security Policy (CSP)
-8. ⚠️ Use CSRF tokens for sensitive operations
+### Backup Your Data
 
-## Production Deployment Checklist
+Regularly backup your data via the admin panel:
+1. Login to admin area
+2. Scroll to "Eksporter" sections
+3. Click "Kopier JSON" for teams and results
+4. Save the JSON to a safe location
 
-- [ ] Change admin password
-- [ ] Enable HTTPS
-- [ ] Set up CSP headers
-- [ ] Configure rate limiting
-- [ ] Set up monitoring/logging
-- [ ] Regular security audits
-- [ ] Backup strategy in place
+### Sharing Data Across Devices
+
+Since GitHub Pages is static hosting, data doesn't sync automatically:
+
+**Option 1: Manual Sync (Recommended)**
+1. Export JSON from admin on Device A
+2. Save to `data/teams.json` and `data/results.json`
+3. Commit and push to GitHub
+4. Pull on Device B
+5. Data will load from JSON files
+
+**Option 2: Use Same Browser**
+- Use browser sync (Chrome Sync, Firefox Sync)
+- localStorage may sync across devices
+
+**Option 3: Backend Integration (Advanced)**
+- Add a backend API (Firebase, Supabase, etc.)
+- Replace localStorage calls with API calls
+
+### File Structure
+
+```
+/home/jonasd/dev/pcfb/
+├── index.html          # Main homepage
+├── about.html          # About page
+├── hold.html           # Teams page
+├── results.html        # Results/leagues page
+├── join.html           # Join page
+├── contact.html        # Contact page
+├── admin.html          # Admin dashboard
+├── setup.html          # First-run setup wizard
+├── styles.css          # Shared styles (create if needed)
+├── script.js           # Shared scripts (create if needed)
+├── data/
+│   ├── teams.json      # Team data (fallback)
+│   └── results.json    # Results data (fallback)
+└── README.md           # This file
+```
+
+### Admin Password
+
+**Default password:** `admin123`
+
+⚠️ **CRITICAL:** Change immediately via setup.html
+
+### Security Features
+
+✅ SHA-512 password hashing  
+✅ Session tokens (1-hour timeout)  
+✅ Login attempt limiting (5 attempts, 15-min lockout)  
+✅ XSS protection (HTML sanitization)  
+✅ DevTools detection (auto-logout in production)  
+✅ Input validation  
+
+### Browser Compatibility
+
+- ✅ Chrome/Edge 90+
+- ✅ Firefox 88+
+- ✅ Safari 14+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+### Known Limitations
+
+1. **No real-time sync** between devices
+2. **Data loss** if browser data is cleared
+3. **No server-side validation** (client-side only)
+4. **No user management** (single admin account)
+
+### Troubleshooting
+
+**Problem:** Can't see data on different device  
+**Solution:** Export/import JSON or commit data files to repo
+
+**Problem:** Forgot admin password  
+**Solution:** Run setup.html again or clear localStorage
+
+**Problem:** Login attempts locked  
+**Solution:** Wait 15 minutes or clear `pcfb_login_attempts` from localStorage
+
+**Problem:** Data disappeared  
+**Solution:** Check if browser data was cleared; restore from JSON backup
+
+### Development
+
+To test locally:
+```bash
+# Serve with any static server
+python -m http.server 8000
+# or
+npx serve
+```
+
+Then visit `http://localhost:8000`
+
+### Production Checklist
+
+- [ ] Change admin password from `admin123`
+- [ ] Test all pages on GitHub Pages URL
+- [ ] Backup data to JSON files
+- [ ] Commit data files to repository
+- [ ] Update contact information
+- [ ] Test on mobile devices
+- [ ] Verify HTTPS is working
+
+### License
+
+© 2025 Powerchair Football Danmark. All rights reserved.

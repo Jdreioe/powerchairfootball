@@ -612,6 +612,9 @@
             <div>
                 <h3>Powerchair Football Danmark</h3>
                 <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+                <p style="margin-top: 1rem; font-size: 0.875rem;">
+                    <a href="./setup.html" style="color: rgba(255,255,255,0.7);">Første gangs opsætning</a>
+                </p>
             </div>
             <nav aria-label="Footer links">
                 <h3>Links</h3>
@@ -630,10 +633,8 @@
     </footer>
 
     <script>
-        // Check if setup is complete
-        if (!localStorage.getItem('pcfb_setup_complete')) {
-            window.location.href = './setup.html';
-        }
+        // Don't redirect to setup on GitHub Pages - setup is optional
+        // Users can manually visit setup.html if needed
 
         // Theme management
         const themeToggle = document.getElementById('theme-toggle');
