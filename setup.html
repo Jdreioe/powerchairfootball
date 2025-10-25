@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Opsætning - Powerchair Football Danmark">
+    <title>Første opsætning | Powerchair Football Danmark</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        .setup-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--bg-alt);
+            border-radius: 8px;
+        }
+        .setup-step {
+            display: none;
+        }
+        .setup-step.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .step-indicator {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: space-between;
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .strength-weak { color: var(--secondary); }
+        .strength-medium { color: #f59e0b; }
+        .strength-strong { color: var(--success); }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .checklist li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .alert-info {
+            background: rgba(26, 84, 144, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        .alert-warning {
+            background: rgba(230, 57, 70, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Spring til hovedindhold</a>
+
+    <header>
+        <div class="header-content">
+            <a href="./index.html" class="logo" aria-label="Powerchair Football Danmark - Forside">
+                ⚽ Powerchair Football Danmark
+            </a>
+        </div>
+    </header>
+
+    <main id="main">
+        <div class="setup-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 0%"></div>
+            </div>
+            <div class="step-indicator">
+                <span id="step-text">Trin 1 af 4</span>
+            </div>
+
+            <!-- Step 1: Welcome -->
+            <div class="setup-step active" data-step="1">
+                <h1>Velkommen til Powerchair Football Danmark! 🎉</h1>
+                <p>Denne guide hjælper dig med at konfigurere din hjemmeside.</p>
+                
+                <div class="alert alert-info">
+                    <strong>Vigtigt:</strong> Du skal gennemføre denne opsætning for at sikre, at din side er klar til brug.
+                </div>
+
+                <h3>Hvad skal vi opsætte?</h3>
+                <ul class="checklist">
+                    <li>Admin adgangskode (sikkert login)</li>
+                    <li>Hold information</li>
+                    <li>Første kampresultater</li>
+                    <li>Kontaktinformation</li>
+                </ul>
+
+                <div class="button-group">
+                    <div></div>
+                    <button class="btn" onclick="nextStep()">Kom i gang</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Admin Password -->
+            <div class="setup-step" data-step="2">
+                <h2>Opsæt admin adgangskode</h2>
+                <div class="alert alert-warning">
+                    <strong>Sikkerhed først!</strong> Vælg en stærk adgangskode til admin-området.
+                </div>
+
+                <form id="password-form">
+                    <div class="form-group">
+                        <label for="new-password">Ny adgangskode</label>
+                        <input 
+                            type="password" 
+                            id="new-password" 
+                            required 
+                            minlength="8"
+                            autocomplete="new-password">
+                        <div id="password-strength" class="password-strength"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Bekræft adgangskode</label>
+                        <input 
+                            type="password" 
+                            id="confirm-password" 
+                            required
+                            autocomplete="new-password">
+                        <p id="password-match" class="error-message" style="display: none;"></p>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Tips til stærk adgangskode:</strong>
+                        <ul style="margin: 0.5rem 0 0 1.5rem;">
+                            <li>Minimum 8 tegn</li>
+                            <li>Kombination af store og små bogstaver</li>
+                            <li>Mindst ét tal</li>
+                            <li>Mindst ét specialtegn (!@#$%)</li>
+                        </ul>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-outline" onclick="prevStep()">Tilbage</button>
+                        <button type="submit" class="btn">Næste</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3: Initialize Data -->
+            <div class="setup-step" data-step="3">
+                <h2>Initialiser data</h2>
+                <p>Vi opretter standard data til din side.</p>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="load-sample-data" checked>
+                        Indlæs eksempeldata (hold og resultater)
+                    </label>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Eksempeldata inkluderer:</strong>
+                    <ul style="margin: 0.5rem 0 0 1.5rem;">
+                        <li>4 danske hold</li>
+                        <li>4 seneste kampresultater</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem;"><small>Du kan redigere eller slette dette senere via admin-området.</small></p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-outline" onclick="prevStep()">Tilbage</button>
+                    <button class="btn" onclick="initializeData()">Næste</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Complete -->
+            <div class="setup-step" data-step="4">
+                <h2>🎉 Opsætning fuldført!</h2>
+                <p>Din Powerchair Football Danmark hjemmeside er klar til brug.</p>
+
+                <div class="alert alert-info">
+                    <strong>Næste skridt:</strong>
+                    <ul style="margin: 0.5rem 0 0 1.5rem;">
+                        <li>Besøg <a href="./admin.html">admin-området</a> for at tilføje indhold</li>
+                        <li>Gem din adgangskode et sikkert sted</li>
+                        <li>Tilpas holdoplysninger efter behov</li>
+                    </ul>
+                </div>
+
+                <h3>Din admin adgang:</h3>
+                <div class="card" style="background: var(--bg); padding: 1rem;">
+                    <p><strong>URL:</strong> <a href="./admin.html">admin.html</a></p>
+                    <p><strong>Adgangskode:</strong> <code id="saved-password" style="background: var(--bg-alt); padding: 0.25rem 0.5rem; border-radius: 4px;">••••••••</code></p>
+                    <button type="button" class="btn btn-outline" onclick="togglePassword()" style="margin-top: 0.5rem;">Vis adgangskode</button>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-outline" onclick="window.location.href='./index.html'">Gå til forsiden</button>
+                    <button class="btn" onclick="window.location.href='./admin.html'">Åbn admin</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Powerchair Football Danmark</h3>
+                <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Powerchair Football Danmark. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 1;
+        let savedPassword = '';
+
+        // Password strength checker
+        document.getElementById('new-password')?.addEventListener('input', (e) => {
+            const password = e.target.value;
+            const strengthEl = document.getElementById('password-strength');
+            const strength = checkPasswordStrength(password);
+            
+            if (password.length === 0) {
+                strengthEl.textContent = '';
+                return;
+            }
+
+            let text = '';
+            let className = '';
+            
+            if (strength >= 4) {
+                text = '💪 Stærk adgangskode';
+                className = 'strength-strong';
+            } else if (strength >= 2) {
+                text = '⚠️ Middel adgangskode';
+                className = 'strength-medium';
+            } else {
+                text = '❌ Svag adgangskode';
+                className = 'strength-weak';
+            }
+            
+            strengthEl.textContent = text;
+            strengthEl.className = 'password-strength ' + className;
+        });
+
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        // Password form handler
+        document.getElementById('password-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('new-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            const matchEl = document.getElementById('password-match');
+
+            if (password !== confirm) {
+                matchEl.textContent = 'Adgangskoderne matcher ikke';
+                matchEl.style.display = 'block';
+                return;
+            }
+
+            // Generate hash
+            const hash = await hashPassword(password);
+            localStorage.setItem('pcfb_admin_hash', hash);
+            savedPassword = password;
+            matchEl.style.display = 'none';
+            
+            nextStep();
+        });
+
+        async function hashPassword(password) {
+            const msgBuffer = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-512', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                updateStep();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStep();
+            }
+        }
+
+        function updateStep() {
+            document.querySelectorAll('.setup-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
+            
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('step-text').textContent = `Trin ${currentStep} af 4`;
+        }
+
+        function initializeData() {
+            const loadSample = document.getElementById('load-sample-data').checked;
+            
+            if (loadSample) {
+                // Sample teams
+                const teams = [
+                    {
+                        name: "Aarhus Rolling Devils",
+                        description: "Flere hold i Liga 1 og Liga 2. Cup vindere 2025.",
+                        contact: "info@rollingdevils.dk",
+                        training: "Se holdets hjemmeside for træningstider"
+                    },
+                    {
+                        name: "Aalborg Powerchair Football",
+                        description: "Hold i både Liga 1 og Liga 2.",
+                        contact: "parasport@aalborg.dk",
+                        training: "Kontakt holdet for information"
+                    },
+                    {
+                        name: "Holbæk Powerchair Football",
+                        description: "Nyt hold med liga-debut i sæson 25/26. Træning tirsdage og torsdage kl. 17-19.",
+                        contact: "kontakt@holbaekpcf.dk",
+                        training: "Tirsdag og torsdag 17:00-19:00"
+                    },
+                    {
+                        name: "BSF Powerchair Football",
+                        description: "Ballerup-Skovlunde Fodbold - Aktivt hold i den danske liga.",
+                        contact: "powerchair@bsfodbold.dk",
+                        training: "Se holdets hjemmeside"
+                    }
+                ];
+
+                // Sample results
+                const results = [
+                    {
+                        homeTeam: "Aarhus Rolling Devils 2",
+                        awayTeam: "Aarhus Rolling Devils 3",
+                        score: "3-2",
+                        status: "Liga 2 - FT",
+                        date: new Date().toISOString().split('T')[0]
+                    },
+                    {
+                        homeTeam: "Holbæk Powerchair Football",
+                        awayTeam: "BSF Powerchair Football 1",
+                        score: "1-4",
+                        status: "FT",
+                        date: new Date().toISOString().split('T')[0]
+                    },
+                    {
+                        homeTeam: "Aalborg Powerchair Football 1",
+                        awayTeam: "Aalborg Powerchair Football 2",
+                        score: "5-1",
+                        status: "Liga 1 - FT",
+                        date: new Date(Date.now() - 86400000).toISOString().split('T')[0]
+                    },
+                    {
+                        homeTeam: "Aarhus Rolling Devils 1",
+                        awayTeam: "Aalborg Powerchair Football 3",
+                        score: "4-3",
+                        status: "FT",
+                        date: new Date(Date.now() - 86400000).toISOString().split('T')[0]
+                    }
+                ];
+
+                localStorage.setItem('pcfb_teams', JSON.stringify(teams));
+                localStorage.setItem('pcfb_results', JSON.stringify(results));
+            }
+
+            // Mark setup as complete
+            localStorage.setItem('pcfb_setup_complete', 'true');
+            
+            nextStep();
+        }
+
+        function togglePassword() {
+            const el = document.getElementById('saved-password');
+            if (el.textContent === '••••••••') {
+                el.textContent = savedPassword;
+            } else {
+                el.textContent = '••••••••';
+            }
+        }
+
+        // Check if setup is already complete
+        if (localStorage.getItem('pcfb_setup_complete') === 'true') {
+            if (confirm('Opsætningen er allerede gennemført. Vil du køre den igen? Dette vil overskrive eksisterende indstillinger.')) {
+                localStorage.removeItem('pcfb_setup_complete');
+            } else {
+                window.location.href = './index.html';
+            }
+        }
+    </script>
+</body>
+</html>

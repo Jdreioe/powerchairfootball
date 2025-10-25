@@ -630,6 +630,11 @@
     </footer>
 
     <script>
+        // Check if setup is complete
+        if (!localStorage.getItem('pcfb_setup_complete')) {
+            window.location.href = './setup.html';
+        }
+
         // Theme management
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.querySelector('.theme-icon');
