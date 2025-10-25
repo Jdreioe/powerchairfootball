@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Aarhus Rolling Devils",
+        "description": "Flere hold i Liga 1 og Liga 2. Cup vindere 2025.",
+        "contact": "info@rollingdevils.dk",
+        "training": "Se holdets hjemmeside for træningstider"
+    },
+    {
+        "name": "Aalborg Powerchair Football",
+        "description": "Hold i både Liga 1 og Liga 2.",
+        "contact": "parasport@aalborg.dk",
+        "training": "Kontakt holdet for information"
+    },
+    {
+        "name": "Holbæk Powerchair Football",
+        "description": "Nyt hold med liga-debut i sæson 25/26. Træning tirsdage og torsdage kl. 17-19.",
+        "contact": "kontakt@holbaekpcf.dk",
+        "training": "Tirsdag og torsdag 17:00-19:00"
+    },
+    {
+        "name": "BSF Powerchair Football",
+        "description": "Ballerup-Skovlunde Fodbold - Aktivt hold i den danske liga.",
+        "contact": "powerchair@bsfodbold.dk",
+        "training": "Se holdets hjemmeside"
+    }
+]

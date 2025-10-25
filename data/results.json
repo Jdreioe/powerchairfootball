@@ -1,0 +1,30 @@
+[
+    {
+        "homeTeam": "Aarhus Rolling Devils 2",
+        "awayTeam": "Aarhus Rolling Devils 3",
+        "score": "3-2",
+        "status": "Liga 2 - FT",
+        "date": "2025-01-15"
+    },
+    {
+        "homeTeam": "Holbæk Powerchair Football",
+        "awayTeam": "BSF Powerchair Football 1",
+        "score": "1-4",
+        "status": "FT",
+        "date": "2025-01-15"
+    },
+    {
+        "homeTeam": "Aalborg Powerchair Football 1",
+        "awayTeam": "Aalborg Powerchair Football 2",
+        "score": "5-1",
+        "status": "Liga 1 - FT",
+        "date": "2025-01-14"
+    },
+    {
+        "homeTeam": "Aarhus Rolling Devils 1",
+        "awayTeam": "Aalborg Powerchair Football 3",
+        "score": "4-3",
+        "status": "FT",
+        "date": "2025-01-14"
+    }
+]

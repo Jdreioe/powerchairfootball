@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ligaer og resultater - Seneste kampe i Powerchair Football Danmark">
+    <title>Ligaer | Powerchair Football Danmark</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Spring til hovedindhold</a>
+
+    <header>
+        <div class="header-content">
+            <a href="./index.html" class="logo" aria-label="Powerchair Football Danmark - Forside">
+                ⚽ Powerchair Football Danmark
+            </a>
+            <div class="header-right">
+                <div role="status" aria-live="polite" aria-atomic="true">
+                    <span id="greeting">God aften</span>
+                </div>
+                <button 
+                    id="theme-toggle" 
+                    class="theme-toggle" 
+                    aria-label="Skift mellem lys og mørk tilstand"
+                    aria-pressed="false">
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
+                    <span id="theme-text">Mørk</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Hovedmenu">
+        <ul>
+            <li><a href="./index.html">Forside</a></li>
+            <li><a href="./about.html">Om powerchair football</a></li>
+            <li><a href="./hold.html">Hold</a></li>
+            <li><a href="./results.html" aria-current="page">Ligaer</a></li>
+            <li><a href="./join.html">Bliv medlem</a></li>
+            <li><a href="./contact.html">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <main id="main">
+        <h1>Ligaer og Resultater</h1>
+        <p>Følg med i forbundsmesterskabet og se seneste kampresultater.</p>
+
+        <h2>Seneste kampe</h2>
+        <div class="match-results">
+            <article class="match-result">
+                <span class="team">Aarhus Rolling Devils 2</span>
+                <span class="score" aria-label="resultat">-</span>
+                <span class="team">Aarhus Rolling Devils 3</span>
+                <span class="status" role="status">Liga 2 - FT</span>
+            </article>
+            <article class="match-result">
+                <span class="team">Holbæk Powerchair Football</span>
+                <span class="score" aria-label="resultat">-</span>
+                <span class="team">BSF Powerchair Football 1</span>
+                <span class="status" role="status">FT</span>
+            </article>
+            <article class="match-result">
+                <span class="team">Aalborg Powerchair Football 1</span>
+                <span class="score" aria-label="resultat">-</span>
+                <span class="team">Aalborg Powerchair Football 2</span>
+                <span class="status" role="status">Liga 1 - FT</span>
+            </article>
+            <article class="match-result">
+                <span class="team">Aarhus Rolling Devils 1</span>
+                <span class="score" aria-label="resultat">-</span>
+                <span class="team">Aalborg Powerchair Football 3</span>
+                <span class="status" role="status">FT</span>
+            </article>
+        </div>
+
+        <h2>Forbundsmesterskabet</h2>
+        <p>Forbundsmesterskabet afvikles under Parasport Danmark med 7-8 stævner fra september til maj/juni. Vinderen kvalificerer sig til Champions Cup i Europa.</p>
+        <p>For mere information om turneringsplan og stillingen, besøg <a href="https://parasport.dk/idraetter/powerchair-football/" target="_blank" rel="noopener noreferrer">Parasport Danmarks hjemmeside</a>.</p>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Powerchair Football Danmark</h3>
+                <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+            </div>
+            <nav aria-label="Footer links">
+                <h3>Links</h3>
+                <a href="https://parasport.dk" target="_blank" rel="noopener noreferrer">Parasport Danmark</a>
+                <a href="https://fipfa.org" target="_blank" rel="noopener noreferrer">FIPFA</a>
+                <a href="https://facebook.com/PowerchairFootballDanmark" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+            <div>
+                <h3>Kontakt</h3>
+                <p>Email: <a href="mailto:tsclausen@gmail.com">tsclausen@gmail.com</a></p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Powerchair Football Danmark. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+    <script>
+        // Load match results dynamically
+        async function loadResults() {
+            try {
+                // Try localStorage first
+                const stored = localStorage.getItem('pcfb_results');
+                let results;
+                
+                if (stored) {
+                    results = JSON.parse(stored);
+                } else {
+                    const response = await fetch('./data/results.json');
+                    results = await response.json();
+                }
+                
+                const resultsContainer = document.querySelector('.match-results');
+                
+                resultsContainer.innerHTML = results.map(match => `
+                    <article class="match-result">
+                        <span class="team">${match.homeTeam}</span>
+                        <span class="score" aria-label="resultat">${match.score || '-'}</span>
+                        <span class="team">${match.awayTeam}</span>
+                        <span class="status" role="status">${match.status}</span>
+                    </article>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load results:', error);
+            }
+        }
+
+        loadResults();
+        
+        // Auto-refresh every 5 minutes
+        setInterval(loadResults, 300000);
+    </script>
+</body>
+</html>

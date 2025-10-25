@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Oversigt over Powerchair Football ligaer i Danmark - Liga 1, Liga 2 og Cup turneringer.">
+    <title>Ligaer og Turneringer | Powerchair Football Danmark</title>
+    <style>
+        :root {
+            --primary: #1a5490;
+            --primary-dark: #0f3a63;
+            --secondary: #e63946;
+            --text: #1a1a1a;
+            --text-light: #4a4a4a;
+            --bg: #ffffff;
+            --bg-alt: #f5f7fa;
+            --border: #d1d5db;
+            --success: #059669;
+            --gold: #fbbf24;
+            --silver: #9ca3af;
+            --bronze: #f97316;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4a9eff;
+            --primary-dark: #2563eb;
+            --secondary: #ff6b78;
+            --text: #e5e7eb;
+            --text-light: #d1d5db;
+            --bg: #0f172a;
+            --bg-alt: #1e293b;
+            --border: #334155;
+            --success: #10b981;
+            --gold: #fde047;
+            --silver: #d1d5db;
+            --bronze: #fb923c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        nav {
+            background: var(--primary-dark);
+        }
+
+        nav ul {
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            transition: background-color 0.2s;
+        }
+
+        nav a:hover,
+        nav a:focus,
+        nav a[aria-current="page"] {
+            background: var(--primary);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            color: white;
+        }
+
+        .league-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .standings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .standings-table th,
+        .standings-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .standings-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .standings-table tr:hover {
+            background: var(--bg-alt);
+        }
+
+        .standings-table .position {
+            font-weight: 700;
+            text-align: center;
+            width: 50px;
+        }
+
+        .standings-table .team-name {
+            font-weight: 600;
+        }
+
+        .standings-table .stats {
+            text-align: center;
+            width: 80px;
+        }
+
+        .trophy {
+            margin-right: 0.5rem;
+        }
+
+        .gold-trophy {
+            color: var(--gold);
+        }
+
+        .silver-trophy {
+            color: var(--silver);
+        }
+
+        .bronze-trophy {
+            color: var(--bronze);
+        }
+
+        .schedule-section {
+            margin: 2rem 0;
+        }
+
+        .match-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .match-date {
+            font-weight: 600;
+            color: var(--text-light);
+            min-width: 120px;
+        }
+
+        .match-teams {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .match-teams strong {
+            color: var(--primary);
+        }
+
+        .match-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        .badge-live {
+            background: var(--secondary);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .badge-upcoming {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-finished {
+            background: var(--text-light);
+            color: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .info-box {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .info-box h3 {
+            color: white;
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        footer h3 {
+            color: white;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .standings-table {
+                font-size: 0.875rem;
+            }
+
+            .standings-table th,
+            .standings-table td {
+                padding: 0.5rem;
+            }
+
+            .match-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .match-score {
+                font-size: 1.25rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav a {
+                padding: 1rem;
+                border-bottom: 1px solid var(--primary);
+            }
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .badge-live {
+                animation: none;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #4a9eff;
+                --primary-dark: #2563eb;
+                --secondary: #ff6b78;
+                --text: #e5e7eb;
+                --text-light: #d1d5db;
+                --bg: #0f172a;
+                --bg-alt: #1e293b;
+                --border: #334155;
+                --success: #10b981;
+                --gold: #fde047;
+                --silver: #d1d5db;
+                --bronze: #fb923c;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Spring til hovedindhold</a>
+
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">⚽ Powerchair Football Danmark</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Skift tema" aria-pressed="false">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+                <span id="theme-text">Mørk</span>
+            </button>
+        </div>
+    </header>
+
+    <nav aria-label="Hovedmenu">
+        <ul>
+            <li><a href="index.html">Forside</a></li>
+            <li><a href="about.html">Om os</a></li>
+            <li><a href="teams.html">Hold</a></li>
+            <li><a href="leagues.html" aria-current="page">Ligaer</a></li>
+            <li><a href="join.html">Bliv medlem</a></li>
+            <li><a href="contact.html">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <main id="main">
+        <div class="page-header">
+            <h1>Ligaer og Turneringer</h1>
+            <p>Følg dansk Powerchair Football - stillinger, kampe og resultater</p>
+        </div>
+
+        <section aria-labelledby="season-info">
+            <div class="info-box">
+                <h3>Sæson 2024/2025</h3>
+                <p><strong>Sæsonstart:</strong> August 2024</p>
+                <p><strong>Sæsonslut:</strong> Maj/Juni 2025</p>
+                <p><strong>Turneringsformat:</strong> Liga 1 og Liga 2 med op- og nedrykningsspil</p>
+                <p><strong>Cup turnering:</strong> Knockout format med alle hold</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="liga1">
+            <h2 id="liga1">Liga 1</h2>
+            <div class="league-card">
+                <p>Den højeste division i dansk Powerchair Football. Her konkurrerer landets bedste hold om mesterskabet.</p>
+                
+                <table class="standings-table">
+                    <caption class="sr-only">Liga 1 Stillinger 2024/2025</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="position">#</th>
+                            <th scope="col">Hold</th>
+                            <th scope="col" class="stats">K</th>
+                            <th scope="col" class="stats">V</th>
+                            <th scope="col" class="stats">U</th>
+                            <th scope="col" class="stats">T</th>
+                            <th scope="col" class="stats">Point</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="position"><span class="trophy gold-trophy" aria-label="Førsteplads">🥇</span>1</td>
+                            <td class="team-name">Aarhus Rolling Devils 1</td>
+                            <td class="stats">12</td>
+                            <td class="stats">9</td>
+                            <td class="stats">2</td>
+                            <td class="stats">1</td>
+                            <td class="stats"><strong>29</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position"><span class="trophy silver-trophy" aria-label="Andenplads">🥈</span>2</td>
+                            <td class="team-name">Aalborg Powerchair Football 1</td>
+                            <td class="stats">12</td>
+                            <td class="stats">8</td>
+                            <td class="stats">2</td>
+                            <td class="stats">2</td>
+                            <td class="stats"><strong>26</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position"><span class="trophy bronze-trophy" aria-label="Tredjeplads">🥉</span>3</td>
+                            <td class="team-name">BSF Powerchair Football 1</td>
+                            <td class="stats">12</td>
+                            <td class="stats">6</td>
+                            <td class="stats">3</td>
+                            <td class="stats">3</td>
+                            <td class="stats"><strong>21</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position">4</td>
+                            <td class="team-name">Aalborg Powerchair Football 3</td>
+                            <td class="stats">12</td>
+                            <td class="stats">2</td>
+                            <td class="stats">1</td>
+                            <td class="stats">9</td>
+                            <td class="stats"><strong>7</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem;"><small><strong>K:</strong> Kampe spillet | <strong>V:</strong> Vundet | <strong>U:</strong> Uafgjort | <strong>T:</strong> Tabt</small></p>
+            </div>
+        </section>
+
+        <section aria-labelledby="liga2">
+            <h2 id="liga2">Liga 2</h2>
+            <div class="league-card">
+                <p>Anden division med udviklingspotentiale. Vindere af Liga 2 rykker op i Liga 1 næste sæson.</p>
+                
+                <table class="standings-table">
+                    <caption class="sr-only">Liga 2 Stillinger 2024/2025</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="position">#</th>
+                            <th scope="col">Hold</th>
+                            <th scope="col" class="stats">K</th>
+                            <th scope="col" class="stats">V</th>
+                            <th scope="col" class="stats">U</th>
+                            <th scope="col" class="stats">T</th>
+                            <th scope="col" class="stats">Point</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="position"><span class="trophy gold-trophy" aria-label="Førsteplads">🥇</span>1</td>
+                            <td class="team-name">Aalborg Powerchair Football 2</td>
+                            <td class="stats">10</td>
+                            <td class="stats">8</td>
+                            <td class="stats">1</td>
+                            <td class="stats">1</td>
+                            <td class="stats"><strong>25</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position"><span class="trophy silver-trophy" aria-label="Andenplads">🥈</span>2</td>
+                            <td class="team-name">Aarhus Rolling Devils 2</td>
+                            <td class="stats">10</td>
+                            <td class="stats">6</td>
+                            <td class="stats">2</td>
+                            <td class="stats">2</td>
+                            <td class="stats"><strong>20</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position"><span class="trophy bronze-trophy" aria-label="Tredjeplads">🥉</span>3</td>
+                            <td class="team-name">Aarhus Rolling Devils 3</td>
+                            <td class="stats">10</td>
+                            <td class="stats">5</td>
+                            <td class="stats">2</td>
+                            <td class="stats">3</td>
+                            <td class="stats"><strong>17</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="position">4</td>
+                            <td class="team-name">Holbæk Powerchair Football</td>
+                            <td class="stats">10</td>
+                            <td class="stats">1</td>
+                            <td class="stats">1</td>
+                            <td class="stats">8</td>
+                            <td class="stats"><strong>4</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section aria-labelledby="recent-matches">
+            <h2 id="recent-matches">Seneste kampe</h2>
+            <div class="schedule-section">
+                <article class="match-card">
+                    <div class="match-date">25. oktober 2025</div>
+                    <div class="match-teams">
+                        <strong>Aarhus Rolling Devils 2</strong> vs <strong>Aarhus Rolling Devils 3</strong>
+                        <div><span class="badge badge-finished">FT</span> Liga 2</div>
+                    </div>
+                    <div class="match-score">2-3</div>
+                </article>
+
+                <article class="match-card">
+                    <div class="match-date">25. oktober 2025</div>
+                    <div class="match-teams">
+                        <strong>Holbæk Powerchair Football</strong> vs <strong>BSF Powerchair Football 1</strong>
+                        <div><span class="badge badge-finished">FT</span> Liga 1</div>
+                    </div>
+                    <div class="match-score">1-4</div>
+                </article>
+
+                <article class="match-card">
+                    <div class="match-date">24. oktober 2025</div>
+                    <div class="match-teams">
+                        <strong>Aalborg Powerchair Football 1</strong> vs <strong>Aalborg Powerchair Football 2</strong>
+                        <div><span class="badge badge-finished">FT</span> Liga 1</div>
+                    </div>
+                    <div class="match-score">5-2</div>
+                </article>
+
+                <article class="match-card">
+                    <div class="match-date">24. oktober 2025</div>
+                    <div class="match-teams">
+                        <strong>Aarhus Rolling Devils 1</strong> vs <strong>Aalborg Powerchair Football 3</strong>
+                        <div><span class="badge badge-finished">FT</span> Liga 1</div>
+                    </div>
+                    <div class="match-score">6-1</div>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="upcoming">
+            <h2 id="upcoming">Kommende kampe</h2>
+            <div class="schedule-section">
+                <article class="match-card">
+                    <div class="match-date">2. november 2025</div>
+                    <div class="match-teams">
+                        <strong>BSF Powerchair Football 1</strong> vs <strong>Aarhus Rolling Devils 1</strong>
+                        <div><span class="badge badge-upcoming">Kommende</span> Liga 1</div>
+                    </div>
+                    <div class="match-score">-</div>
+                </article>
+
+                <article class="match-card">
+                    <div class="match-date">2. november 2025</div>
+                    <div class="match-teams">
+                        <strong>Aalborg Powerchair Football 2</strong> vs <strong>Holbæk Powerchair Football</strong>
+                        <div><span class="badge badge-upcoming">Kommende</span> Liga 2</div>
+                    </div>
+                    <div class="match-score">-</div>
+                </article>
+
+                <article class="match-card">
+                    <div class="match-date">9. november 2025</div>
+                    <div class="match-teams">
+                        <strong>Aarhus Rolling Devils 3</strong> vs <strong>Aalborg Powerchair Football 3</strong>
+                        <div><span class="badge badge-upcoming">Kommende</span> Liga 1</div>
+                    </div>
+                    <div class="match-score">-</div>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="cup">
+            <h2 id="cup">Pokalturnering</h2>
+            <div class="league-card">
+                <h3>DM Cup 2025</h3>
+                <p>Den årlige pokalturnering hvor alle danske hold konkurrerer i et knockout-format.</p>
+                
+                <div style="margin: 1.5rem 0;">
+                    <h4>Cup vindere:</h4>
+                    <div style="background: var(--bg); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <p><span class="trophy gold-trophy" style="font-size: 2rem;">🏆</span></p>
+                        <h3 style="color: var(--gold); margin-top: 0.5rem;">Aarhus Rolling Devils</h3>
+                        <p style="margin: 0;"><strong>Cup mestere 2025</strong></p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;">Næste års cup turnering starter i januar 2026. Alle hold i begge ligaer deltager automatisk.</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="international">
+            <h2 id="international">Internationale turneringer</h2>
+            <div class="league-card">
+                <h3>Danmarks landshold</h3>
+                <p>Danmark har et aktivt landshold der konkurrerer i internationale turneringer:</p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>FIPFA World Cup</strong> - Afholdes hvert andet år</li>
+                    <li><strong>Europamesterskabet</strong> - EM turnering for europæiske nationer</li>
+                    <li><strong>Internationale venskabskampe</strong> - Mod andre nordiske lande</li>
+                </ul>
+                <p style="margin-top: 1rem;">Interesserede spillere kan blive udtaget til landsholdet gennem stærke præstationer i ligaen.</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="rules">
+            <h2 id="rules">Turneringsformat</h2>
+            <div class="league-card">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h3>Grundspil</h3>
+                        <p>Alle hold møder hinanden 2-3 gange i løbet af sæsonen. Point tildeles:</p>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>3 point for sejr</li>
+                            <li>1 point for uafgjort</li>
+                            <li>0 point for nederlag</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Slutspil</h3>
+                        <p>De bedste hold fra hver liga spiller om mesterskabet i maj/juni.</p>
+                        <p style="margin-top: 0.5rem;">Op- og nedrykningskampe mellem Liga 1 og Liga 2 afgør næste sæsons sammensætning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Powerchair Football Danmark</h3>
+                <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+            </div>
+            <nav aria-label="Footer links">
+                <h3>Links</h3>
+                <a href="https://parasport.dk" target="_blank" rel="noopener noreferrer">Parasport Danmark</a>
+                <a href="https://fipfa.org" target="_blank" rel="noopener noreferrer">FIPFA</a>
+                <a href="https://facebook.com/PowerchairFootballDanmark" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+            <div>
+                <h3>Kontakt</h3>
+                <p>Email: <a href="mailto:tsclausen@gmail.com">tsclausen@gmail.com</a></p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Powerchair Football Danmark. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.querySelector('.theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const html = document.documentElement;
+
+        function initTheme() {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Lys';
+                themeToggle.setAttribute('aria-pressed', 'true');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Mørk';
+                themeToggle.setAttribute('aria-pressed', 'false');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            setTheme(e.matches ? 'dark' : 'light');
+        });
+
+        initTheme();
+    </script>
+</body>
+</html>

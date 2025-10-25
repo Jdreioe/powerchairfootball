@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bliv medlem - Kom i gang med Powerchair Football i Danmark">
+    <title>Bliv medlem | Powerchair Football Danmark</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Spring til hovedindhold</a>
+
+    <header>
+        <div class="header-content">
+            <a href="./index.html" class="logo" aria-label="Powerchair Football Danmark - Forside">
+                ⚽ Powerchair Football Danmark
+            </a>
+            <div class="header-right">
+                <div role="status" aria-live="polite" aria-atomic="true">
+                    <span id="greeting">God aften</span>
+                </div>
+                <button 
+                    id="theme-toggle" 
+                    class="theme-toggle" 
+                    aria-label="Skift mellem lys og mørk tilstand"
+                    aria-pressed="false">
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
+                    <span id="theme-text">Mørk</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Hovedmenu">
+        <ul>
+            <li><a href="./index.html">Forside</a></li>
+            <li><a href="./about.html">Om powerchair football</a></li>
+            <li><a href="./hold.html">Hold</a></li>
+            <li><a href="./results.html">Ligaer</a></li>
+            <li><a href="./join.html" aria-current="page">Bliv medlem</a></li>
+            <li><a href="./contact.html">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <main id="main">
+        <h1>Bliv medlem</h1>
+        
+        <div class="card" style="max-width: 800px; margin: 0 auto 2rem;">
+            <h2>Kom i gang med Powerchair Football</h2>
+            <p>Vil du prøve Powerchair Football? Vi har hold over hele landet, der byder nye spillere velkommen. Der er garanti for sjov, udvikling og mindeværdige oplevelser.</p>
+            <p><strong>Aldersgruppe:</strong> Fra 10 år og op</p>
+            <p><strong>Sæson:</strong> August til maj/juni</p>
+            <p>Kontakt dit lokale hold eller Parasport Danmark for mere information om hvordan du kommer i gang.</p>
+        </div>
+
+        <h2>Sådan kommer du i gang</h2>
+        <div class="card-grid">
+            <article class="card">
+                <h3>1. Find dit lokale hold</h3>
+                <p>Vi har hold i Aarhus, Aalborg, Holbæk og Ballerup-Skovlunde. Se alle hold og kontaktinformation.</p>
+                <a href="./hold.html" class="btn" style="margin-top: 1rem;">Se hold</a>
+            </article>
+            <article class="card">
+                <h3>2. Prøv en træning</h3>
+                <p>Alle hold tilbyder prøvetræning. Du kan låne udstyr på stedet - kom bare og prøv!</p>
+            </article>
+            <article class="card">
+                <h3>3. Bliv medlem</h3>
+                <p>Når du har fundet dit hold, kan du melde dig ind via dit lokale hold og Parasport Danmark.</p>
+            </article>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            <h2>Har du spørgsmål?</h2>
+            <p>Kontakt os, så hjælper vi dig videre.</p>
+            <a href="./contact.html" class="btn">Kontakt os</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Powerchair Football Danmark</h3>
+                <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+            </div>
+            <nav aria-label="Footer links">
+                <h3>Links</h3>
+                <a href="https://parasport.dk" target="_blank" rel="noopener noreferrer">Parasport Danmark</a>
+                <a href="https://fipfa.org" target="_blank" rel="noopener noreferrer">FIPFA</a>
+                <a href="https://facebook.com/PowerchairFootballDanmark" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+            <div>
+                <h3>Kontakt</h3>
+                <p>Email: <a href="mailto:tsclausen@gmail.com">tsclausen@gmail.com</a></p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Powerchair Football Danmark. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>

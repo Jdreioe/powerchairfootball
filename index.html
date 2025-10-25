@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Powerchair Football Danmark - Den officielle side for kørestolsfodbold i Danmark. Information om ligaer, hold og hvordan du kommer i gang.">
+    <title>Powerchair Football Danmark | Kørestolsfodbold</title>
+    <style>
+        :root {
+            --primary: #1a5490;
+            --primary-dark: #0f3a63;
+            --secondary: #e63946;
+            --text: #1a1a1a;
+            --text-light: #4a4a4a;
+            --bg: #ffffff;
+            --bg-alt: #f5f7fa;
+            --border: #d1d5db;
+            --success: #059669;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4a9eff;
+            --primary-dark: #2563eb;
+            --secondary: #ff6b78;
+            --text: #e5e7eb;
+            --text-light: #d1d5db;
+            --bg: #0f172a;
+            --bg-alt: #1e293b;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Skip to main content link for keyboard users */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo:focus {
+            outline: 2px solid white;
+            outline-offset: 4px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .theme-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--primary-dark);
+        }
+
+        nav ul {
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            transition: background-color 0.2s;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            background: var(--primary);
+            outline: none;
+        }
+
+        nav a:focus-visible {
+            outline: 2px solid white;
+            outline-offset: -2px;
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            color: var(--primary);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--primary);
+            margin-top: 2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            background: #d32f3e;
+            border-color: #d32f3e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid white;
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-dark);
+            border-color: white;
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: var(--bg-alt);
+            border-color: var(--bg-alt);
+        }
+
+        [data-theme="dark"] .btn-secondary {
+            background: var(--bg-alt);
+            color: var(--primary);
+            border-color: var(--bg-alt);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        [data-theme="dark"] .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Match results */
+        .match-results {
+            background: var(--bg-alt);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .match-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: var(--bg);
+            border-radius: 4px;
+            border-left: 4px solid var(--primary);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .match-result:hover {
+            transform: translateX(4px);
+        }
+
+        .match-result .team {
+            font-weight: 600;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .match-result .score {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            padding: 0 1rem;
+        }
+
+        .match-result .status {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Contact section */
+        .contact-info {
+            background: var(--bg-alt);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .contact-info a:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        footer h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        footer a:hover,
+        footer a:focus {
+            text-decoration: underline;
+        }
+
+        footer a:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav a {
+                padding: 1rem;
+                border-bottom: 1px solid var(--primary);
+            }
+
+            .match-result {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .match-result .score {
+                padding: 0.5rem 0;
+            }
+        }
+
+        /* Focus styles for better keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* High contrast support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary: #003d82;
+                --text: #000000;
+                --border: #000000;
+            }
+
+            .card,
+            .match-result {
+                border: 2px solid var(--border);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            body {
+                transition: none;
+            }
+        }
+
+        /* Dark mode media query support */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #4a9eff;
+                --primary-dark: #2563eb;
+                --secondary: #ff6b78;
+                --text: #e5e7eb;
+                --text-light: #d1d5db;
+                --bg: #0f172a;
+                --bg-alt: #1e293b;
+                --border: #334155;
+                --success: #10b981;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Spring til hovedindhold</a>
+
+    <header>
+        <div class="header-content">
+            <a href="./index.html" class="logo" aria-label="Powerchair Football Danmark - Forside">
+                ⚽ Powerchair Football Danmark
+            </a>
+            <div class="header-right">
+                <div role="status" aria-live="polite" aria-atomic="true">
+                    <span id="greeting">God aften</span>
+                </div>
+                <button 
+                    id="theme-toggle" 
+                    class="theme-toggle" 
+                    aria-label="Skift mellem lys og mørk tilstand"
+                    aria-pressed="false">
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
+                    <span id="theme-text">Mørk</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav aria-label="Hovedmenu">
+        <ul>
+            <li><a href="./index.html">Forside</a></li>
+            <li><a href="./about.html">Om powerchair football</a></li>
+            <li><a href="./hold.html">Hold</a></li>
+            <li><a href="./results.html">Ligaer</a></li>
+            <li><a href="./join.html">Bliv medlem</a></li>
+            <li><a href="./contact.html">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <main id="main">
+        <section id="home" class="hero" aria-labelledby="hero-heading">
+            <h1 id="hero-heading">Velkommen til Powerchair Football Danmark</h1>
+            <p>Den officielle side for kørestolsfodbold i Danmark. En dynamisk holdsport for personer med fysisk funktionsnedsættelse.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="./join.html" class="btn">Kom i gang</a>
+                <a href="./about.html" class="btn btn-secondary">Læs mere</a>
+            </div>
+        </section>
+
+        <section id="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">Om Powerchair Football</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>Hvad er det?</h3>
+                    <p>Powerchair Football er en holdsport for personer med fysisk funktionsnedsættelse. Der spilles 4 mod 4 på en basketballbane i specielt designede elstole med fodskærme.</p>
+                </article>
+                <article class="card">
+                    <h3>Inklusivt fællesskab</h3>
+                    <p>Uanset dit niveau af erfaring eller fysiske evner, har Powerchair Football plads til dig. Det er en blandet sport uden aldersbegrænsning.</p>
+                </article>
+                <article class="card">
+                    <h3>International sport</h3>
+                    <p>Danmark har et landshold på verdensranglisten og klubber deltager i europæiske turneringer. Vi afvikler nationale mesterskaber hvert år.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="results" aria-labelledby="results-heading">
+            <h2 id="results-heading">Seneste kampe</h2>
+            <div class="match-results">
+                <article class="match-result">
+                    <span class="team">Aarhus Rolling Devils 2</span>
+                    <span class="score" aria-label="resultat">-</span>
+                    <span class="team">Aarhus Rolling Devils 3</span>
+                    <span class="status" role="status">Liga 2 - FT</span>
+                </article>
+                <article class="match-result">
+                    <span class="team">Holbæk Powerchair Football</span>
+                    <span class="score" aria-label="resultat">-</span>
+                    <span class="team">BSF Powerchair Football 1</span>
+                    <span class="status" role="status">FT</span>
+                </article>
+                <article class="match-result">
+                    <span class="team">Aalborg Powerchair Football 1</span>
+                    <span class="score" aria-label="resultat">-</span>
+                    <span class="team">Aalborg Powerchair Football 2</span>
+                    <span class="status" role="status">Liga 1 - FT</span>
+                </article>
+                <article class="match-result">
+                    <span class="team">Aarhus Rolling Devils 1</span>
+                    <span class="score" aria-label="resultat">-</span>
+                    <span class="team">Aalborg Powerchair Football 3</span>
+                    <span class="status" role="status">FT</span>
+                </article>
+            </div>
+        </section>
+
+        <section id="teams" aria-labelledby="teams-heading">
+            <h2 id="teams-heading">Hold i Danmark</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>Aarhus Rolling Devils</h3>
+                    <p>Flere hold i Liga 1 og Liga 2. Cup vindere 2025.</p>
+                </article>
+                <article class="card">
+                    <h3>Aalborg Powerchair Football</h3>
+                    <p>Hold i både Liga 1 og Liga 2.</p>
+                </article>
+                <article class="card">
+                    <h3>Holbæk Powerchair Football</h3>
+                    <p>Nyt hold med liga-debut i sæson 25/26. Træning tirsdage og torsdage kl. 17-19.</p>
+                </article>
+                <article class="card">
+                    <h3>BSF Powerchair Football</h3>
+                    <p>Aktivt hold i den danske liga.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="join" aria-labelledby="join-heading">
+            <h2 id="join-heading">Bliv medlem</h2>
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <h3>Kom i gang med Powerchair Football</h3>
+                <p>Vil du prøve Powerchair Football? Vi har hold over hele landet, der byder nye spillere velkommen. Der er garanti for sjov, udvikling og mindeværdige oplevelser.</p>
+                <p><strong>Aldersgruppe:</strong> Fra 10 år og op</p>
+                <p><strong>Sæson:</strong> August til maj/juni</p>
+                <p>Kontakt dit lokale hold eller Parasport Danmark for mere information om hvordan du kommer i gang.</p>
+                <a href="./index.html#contact" class="btn" style="margin-top: 1rem;">Kontakt os</a>
+            </div>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Kontakt</h2>
+            <div class="contact-info">
+                <h3>Powerchair Football Danmark</h3>
+                <p>For spørgsmål om Powerchair Football i Danmark, kontakt:</p>
+                <p><strong>Formand:</strong> Tobias Clausen<br>
+                <strong>Email:</strong> <a href="mailto:tsclausen@gmail.com">tsclausen@gmail.com</a></p>
+                
+                <p style="margin-top: 1.5rem;">For information om forbundsmesterskabet og landsholdsaktiviteter:</p>
+                <p><strong>Parasport Danmark</strong><br>
+                <a href="https://parasport.dk/idraetter/powerchair-football/" target="_blank" rel="noopener noreferrer">parasport.dk/idraetter/powerchair-football/</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>Powerchair Football Danmark</h3>
+                <p>Den officielle side for kørestolsfodbold i Danmark.</p>
+            </div>
+            <nav aria-label="Footer links">
+                <h3>Links</h3>
+                <a href="https://parasport.dk" target="_blank" rel="noopener noreferrer">Parasport Danmark</a>
+                <a href="https://fipfa.org" target="_blank" rel="noopener noreferrer">FIPFA</a>
+                <a href="https://facebook.com/PowerchairFootballDanmark" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </nav>
+            <div>
+                <h3>Kontakt</h3>
+                <p>Email: <a href="mailto:tsclausen@gmail.com">tsclausen@gmail.com</a></p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 Powerchair Football Danmark. Alle rettigheder forbeholdes.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme management
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.querySelector('.theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const html = document.documentElement;
+
+        // Initialize theme from system preference
+        function initTheme() {
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (systemPrefersDark) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Lys';
+                themeToggle.setAttribute('aria-pressed', 'true');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Mørk';
+                themeToggle.setAttribute('aria-pressed', 'false');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const newTheme = e.matches ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
+
+        // Update greeting based on time of day
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            const greetingEl = document.getElementById('greeting');
+            let greeting;
+            
+            if (hour < 6) greeting = 'God nat';
+            else if (hour < 10) greeting = 'God morgen';
+            else if (hour < 18) greeting = 'God dag';
+            else greeting = 'God aften';
+            
+            greetingEl.textContent = greeting;
+        }
+        
+        initTheme();
+        updateGreeting();
+
+        // Load and display teams
+        async function loadTeams() {
+            try {
+                // Try localStorage first
+                const stored = localStorage.getItem('pcfb_teams');
+                let teams;
+                
+                if (stored) {
+                    teams = JSON.parse(stored);
+                } else {
+                    const response = await fetch('./data/teams.json');
+                    teams = await response.json();
+                }
+                
+                const teamsGrid = document.querySelector('#teams .card-grid');
+                
+                teamsGrid.innerHTML = teams.map(team => `
+                    <article class="card">
+                        <h3>${team.name}</h3>
+                        <p>${team.description}</p>
+                        ${team.contact ? `<p><strong>Kontakt:</strong> <a href="mailto:${team.contact}">${team.contact}</a></p>` : ''}
+                    </article>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load teams:', error);
+            }
+        }
+
+        // Load and display match results
+        async function loadResults() {
+            try {
+                // Try localStorage first
+                const stored = localStorage.getItem('pcfb_results');
+                let results;
+                
+                if (stored) {
+                    results = JSON.parse(stored);
+                } else {
+                    const response = await fetch('./data/results.json');
+                    results = await response.json();
+                }
+                
+                const resultsContainer = document.querySelector('.match-results');
+                
+                resultsContainer.innerHTML = results.slice(0, 4).map(match => `
+                    <article class="match-result">
+                        <span class="team">${match.homeTeam}</span>
+                        <span class="score" aria-label="resultat">${match.score || '-'}</span>
+                        <span class="team">${match.awayTeam}</span>
+                        <span class="status" role="status">${match.status}</span>
+                    </article>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load results:', error);
+            }
+        }
+
+        // Load data on page load
+        loadTeams();
+        loadResults();
+
+        // Auto-refresh every 5 minutes
+        setInterval(() => {
+            loadTeams();
+            loadResults();
+        }, 300000);
+    </script>
+</body>
+</html>
